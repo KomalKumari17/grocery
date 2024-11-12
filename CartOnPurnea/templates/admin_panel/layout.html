@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <!-- Title Meta -->
+     <meta charset="utf-8">
+     <title>Analytics | CartOnPurnea - Responsive Admin Dashboard Template</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="A fully responsive premium admin dashboard template">
+     <meta name="author" content="Techzaa">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <script src="https://cdn.tailwindcss.com"></script>
+     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
+
+
+     <!-- App favicon -->
+     <link rel="shortcut icon" href="{% static "assets/images/favicon.ico"%}">
+
+     <!-- Vendor css (Require in all Page) -->
+     <link href="{% static "assets/css/vendor.min.css"%}" rel="stylesheet" type="text/css">
+
+     <!-- Icons css (Require in all Page) -->
+     <link href="{% static "assets/css/icons.min.css"%}" rel="stylesheet" type="text/css">
+
+     <!-- App css (Require in all Page) -->
+     <link href="{% static "assets/css/app.min.css"%}" rel="stylesheet" type="text/css">
+
+     <!-- Theme Config js (Require in all Page) -->
+     <script src="{% static "assets/js/config.min.js"%}"></script>
+     {% block style %}{% endblock style %}
+</head>
+
+<body>
+
+     <!-- START Wrapper -->
+     <div class="wrapper">
+
+          <!-- ========== Topbar Start ========== -->
+          {% include "admin_panel/adminHeader.html" %}
+
+          <!-- Right Sidebar (Theme Settings) -->
+               {% include "admin_panel/adminSidebar.html" %}
+          <!-- ========== Topbar End ========== -->
+
+          <!-- ========== App Menu Start ========== -->
+       
+          <!-- ========== App Menu End ========== -->
+
+          <!-- ==================================================== -->
+          <!-- Start right Content here -->
+          <!-- ==================================================== -->
+        
+     <!-- END Wrapper -->
+
+     <!-- Vendor Javascript (Require in all Page) -->
+     <script src="{% static "assets/js/vendor.js"%}"></script>
+
+     <!-- App Javascript (Require in all Page) -->
+     <script src="{% static "assets/js/app.js"%}"></script>
+
+     <!-- Vector Map Js -->
+     <script src="{% static "assets/vendor/jsvectormap/js/jsvectormap.min.js"%}"></script>
+     <script src="{% static "assets/vendor/jsvectormap/maps/world-merc.js"%}"></script>
+     <script src="{% static "assets/vendor/jsvectormap/maps/world.js"%}"></script>
+
+     <!-- Dashboard Js -->
+     <script src="{% static "assets/js/pages/dashboard.js"%}"></script>
+     <script src="{% static "assets/js/pages/dashboard.js"%}"></script>
+     {% block content %}{% endblock content %}
+
+     <script>
+          navCollapse.forEach(collapse => {
+               collapse.addEventListener('show.bs.collapse', function () {
+                   console.log('Collapse shown');
+               });
+               collapse.addEventListener('hide.bs.collapse', function () {
+                   console.log('Collapse hidden');
+               });
+           });
+           
+     </script>
+</body>
+
+</html>

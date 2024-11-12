@@ -1,0 +1,13 @@
+{% block content %}
+    <div class="flex w-full border-b border-gray-300 bg-white fixed top-16 px-8 py-2 text-xs z-50">
+        <div class="flex space-x-5 overflow-x-auto">
+            {% for cat in categories %}
+            <div>
+                <a href="{% url 'public.showall.product' cat.id %}" class="text-black hover:text-gray-500 transition-colors duration-200">
+                    {{ cat.cat_title }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+{% endblock content %}

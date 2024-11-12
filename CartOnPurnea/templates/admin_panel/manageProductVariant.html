@@ -1,0 +1,119 @@
+{% extends "admin_panel/layout.html" %}
+{% block content %}
+<div class="flex flex-1 gap-3 pl-5 md:pl-[22%] pr-[2%]">
+    <div class="w-full">
+        <div class="flex flex-col">
+            <div class="flex flex-1 justify-between my-3">
+                <h2 class="text-2xl text-gray-600 font-bold ">Manage Product Variant</h2>
+                <a href="{% url 'admin.productVariant.insert' %}" class="bg-yellow-500 px-3 py-2 rounded-lg text-white">Insert Product Variant</a>
+            </div>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+            <tr>
+                <th scope="col" class="px-2 py-3">
+                    Product Name
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Variant Name
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Variant Type
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    SKU
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Variant Price
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Discount Price
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Variant Quantity
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Size
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Color 
+                </th>
+                <th scope="col" class="px-2 py-3">
+                    Image 
+                </th>
+                <th scope="col" class="px-4 py-3">
+                    Action 
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for var in variants %}
+            <tr class="text-gray-700 border border-gray-300">
+                <th class="px-2 py-2 font-medium text-gray-700 ">
+                    {{var.product.product_name}}
+                </th>
+                <td class="px-2 py-2">
+                    {{var.variant_name}}
+                </td>
+                <td class="px-2 py-2">
+                    {{var.variant_type}}
+                </td>
+                <td class="px-2 py-2">
+                    {{var.sku}}
+                </td>                
+                <td class="px-2 py-2">
+                    {{var.variant_price}}
+                </td>
+                <td class="px-2 py-2">
+                    {{var.discount_price}}
+                </td>
+                <td class="px-2 py-2">
+                    {{var.variant_qty}}
+                </td>
+                <td class="px-2 py-2">
+                    {{var.size}}
+                </td>
+                <td class="px-2 py-2">
+                    {{var.color}}
+                </td>
+                <td class="px-2 py-2">
+                    <img src="{{var.image.url}}" class="w-[70px] h-[50px]" alt="">                
+                </td>
+                <td class="px-2 py-2 flex flex-1 items-center ">
+                
+                    <!-- Button trigger modal -->
+                <button type="button" class="btn text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Delete
+                </button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete Variant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <div class="modal-body">
+                    Are You Sure? You want to delete <b class="text-red-600">{{var.variant_name}}</b> product variant.
+                </div>
+            <div class="modal-footer">
+                <a href="{% url 'admin.Variant.delete' var.id %}"><button type="button" class="btn btn-red" data-bs-dismiss="modal">Yes</button>
+                </a>
+                <a href="{% url 'admin.productVariant'%}"><button type="button" class="btn btn-primary">No</button></a>
+            </div>
+        </div>
+    </div>
+  </div>
+            <a href="{% url 'admin.edit.variant' var.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+        </div>
+    </div>
+   
+</div>
+{% endblock content %}

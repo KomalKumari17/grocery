@@ -1,0 +1,55 @@
+{% block style %}
+<style>
+    .scroll-hidden {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scroll-hidden::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+<div class="w-full flex flex-col mt-20 px-5 gap-10">
+  {% for cat in category %}
+    <div class="w-full bg-gray-100 rounded-lg p-6 shadow-md">
+        <!-- Category Title -->
+        <div class="border-b border-gray-300 mb-6">
+            <h1 class="text-3xl font-bold text-gray-700">{{ cat.cat_title }}</h1>
+        </div>
+        <!-- Products Container -->
+        <div class="flex overflow-x-auto space-x-6 py-4 scroll-hidden">
+          
+          {% for product in products %}
+            {% if product.category == cat %}
+            <a href="{% url 'public.view.product' product.id %}">
+              <div class="w-72 shrink-0 bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
+                  <img class="p-4 rounded-t-lg h-48 w-full object-contain" src="{{ product.product_image.url }}" alt="product image"/>
+                <div class="px-5 pb-5">
+                    <h5 class="text-lg font-semibold text-gray-800 mt-3">{{ product.product_name|truncatewords:6 }}</h5>
+                 
+                  <p class="text-xs text-gray-500">{{ product.category.cat_title }}</p>
+                  
+                  <div class="flex items-center justify-between mt-4">
+                    <span class="text-2xl font-bold text-gray-900">₹{{ product.discount_price }}</span>
+                    <del class="text-sm font-medium text-gray-400">₹{{ product.product_price }}</del>
+                  </div>
+                  
+                </div>
+              </div>
+            </a>
+            {% endif %}
+          {% endfor %}
+
+          <!-- View All Button -->
+          <div class="flex items-center justify-center pt-[10%]">
+            <a href="{% url 'public.showall.product' cat.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-semibold transition">
+              View All
+            </a>
+          </div>
+        </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}

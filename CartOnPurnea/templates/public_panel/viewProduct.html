@@ -1,0 +1,109 @@
+{% extends "public_panel/layout.html" %}
+{% block style %}
+<style>
+    .scroll-hidden {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scroll-hidden::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<div class="flex justify-center py-10 px-5">
+    <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden max-w-4xl transform transition hover:scale-105 hover:shadow-xl dark:border-gray-300 dark:bg-gray-100 dark:hover:bg-gray-200">
+        <!-- Product Image -->
+        <div class="flex flex-col">
+            <div class="w-full h-full md:w-full flex items-center justify-center bg-gray-50 p-4">
+                <img class="object-cover w-[280px] h-full max-h-[450px] rounded-lg" src="{{ product.product_image.url }}" alt="Product image">
+            </div>
+            <div class="flex justify-start m-1 gap-2">
+                <a href="{% url 'public.cart' %}" class="w-full flex md:w-full justify-center bg-orange-500 hover:bg-orange-600 text-white text-lg px-9 py-3 transition font-semibold">
+                    <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .979.796L7.939 6H19a1 1 0 0 1 .979 1.204l-1.25 6a1 1 0 0 1-.979.796H9.605l.208 1H17a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L5.686 5H5a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                      </svg>
+                      
+                    Add to Cart
+                </a>
+                
+            </div>
+        </div>
+        <!-- Product Details -->
+        <div class="flex flex-col justify-between p-9 w-full md:w-1/2">
+            <!-- Product Name and Description -->
+            <div class="">
+                <h5 class="text-3xl font-bold tracking-tight text-gray-800 dark:text-gray-700">{{ product.product_name }}</h5>
+                <div class="flex gap-2 ">
+                    {% for var in variant %}
+                    {% if product.product_name == var.product.product_name %}
+                        <p class="bg-gray-200 rounded-lg px-2 py-1 ">{{var.variant_name}}</p>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <p class="text-gray-700 dark:text-gray-600 mt-2 leading-relaxed">{{ product.product_desc }}</p>
+            </div>
+            <!-- Price Section -->
+            <div class="mb-6">
+                <p class="text-3xl font-bold text-gray-800 dark:text-gray-700">₹{{ product.discount_price }}
+                    <del class="text-gray-400 text-sm">₹{{ product.product_price }}</del>
+                    <span class="text-green-600 text-sm ">{{ product.per_discount|floatformat:0 }}% off</span>
+                </p>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<h1 class="text-slate-600 font-bold text-2xl pl-10 mt-5">Related Products</h1>
+{% if rp_count > 1 %}
+<div class="w-full flex flex-col mt-2 px-5 gap-10">
+  {% for cat in category %}
+    <div class="w-full bg-gray-100 rounded-lg p-6 shadow-md">
+        <!-- Category Title -->
+        <div class="border-b border-gray-300 mb-6">
+            <h1 class="text-3xl font-bold text-gray-700">{{ cat.cat_title }}</h1>
+        </div>
+        
+        <!-- Products Container -->
+        <div class="flex overflow-x-auto space-x-6 py-4 scroll-hidden">
+          {% for product in rp %}
+            {% if product.category == cat %}
+           
+           <a href="{% url 'public.view.product' product.id %}">
+            <div class="w-72 shrink-0 bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
+                <img class="p-4 rounded-t-lg h-48 w-full object-contain" src="{{ product.product_image.url }}" alt="product image"/>
+              <div class="px-5 pb-5">
+                  <h5 class="text-lg font-semibold text-gray-800 mt-3">{{ product.product_name|truncatewords:6 }}</h5>
+               
+                <p class="text-xs text-gray-500">{{ product.category.cat_title }}</p>
+                
+                <div class="flex items-center gap-2 mt-4">
+                  <span class="text-2xl font-bold text-gray-900 ">₹{{ product.discount_price }}</span>
+                  <del class="text-sm font-medium text-gray-400 mt-2">₹{{ product.product_price }}</del>
+                  <span class="text-green-600 text-sm mt-2">{{ product.per_discount|floatformat:0 }}% off</span>
+
+                </div>
+                
+              </div>
+            </div>
+          </a>
+           {% endif %}
+          {% endfor %}
+
+          <!-- View All Button -->
+          <div class="flex items-center justify-center pt-[10%]">
+            <a href="{% url 'public.showall.product' cat.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-semibold transition">
+              View All
+            </a>
+          </div>
+        </div>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+           <div>
+                <h1 class="px-[10%] text-slate-300 font-semibold py-[5%] text-7xl">Not Found</h1>
+           </div>
+{% endif %}
+{% endblock content %}
